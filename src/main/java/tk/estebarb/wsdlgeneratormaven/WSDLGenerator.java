@@ -5,12 +5,15 @@
  */
 package tk.estebarb.wsdlgeneratormaven;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import wsdl.WSDLDocument;
 
 /**
  *
@@ -21,49 +24,34 @@ public class WSDLGenerator {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-	if (args.length != 2) {
-	    System.out.println("El uso correcto es:\nWSDLGenerator clase archivoSalida\n");
+    public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException {
+	if (args.length != 3 || args.length != 4) {
+	    System.out.println("El uso correcto es:\nWSDLGenerator clase archivoSalida urlWS [wsname]\n");
 	}
-	try {
-	    Class<?> c = Class.forName(args[0]);
-	    System.out.format("Generando para: %s\n", args[0]);
-	    System.out.format("Salida en: %s\n", args[1]);
 
-	    export(c.getMethods(), "Methods");
-	    printClasses(c);
-	} catch (ClassNotFoundException ex) {
-	    Logger.getLogger(WSDLGenerator.class.getName()).log(Level.SEVERE, null, ex);
+	Class<?> c = Class.forName(args[0]);
+	System.out.format("Generando para: %s\n", args[0]);
+	System.out.format("Salida en: %s\n", args[1]);
+
+	String wsName;
+	if (args.length == 3) {
+	    wsName = args[0];
+	} else {
+	    wsName = args[3];
 	}
-    }
 
-    private static void export(Member[] mbrs, String s) {
-	System.out.format("%s:%n", s);
-	for (Member mbr : mbrs) {
-	    if (mbr instanceof Field) {
-		System.out.format("  %s%n", ((Field) mbr).toGenericString());
-	    } else if (mbr instanceof Constructor) {
-		System.out.format("  %s%n", ((Constructor) mbr).toGenericString());
-	    } else if (mbr instanceof Method) {
-		System.out.format("  %s%n", ((Method) mbr).toGenericString());
+	WSDLDocument doc = new WSDLDocument(args[2], wsName);
+	for (Method m : c.getDeclaredMethods()) {
+	    if (m instanceof Method) {
+		System.out.format("  %s%n", ((Method) m).toGenericString());
+		doc.AddMethod(m);
 	    }
 	}
-	if (mbrs.length == 0) {
-	    System.out.format("  -- No %s --%n", s);
-	}
-	System.out.format("%n");
-    }
 
-    private static void printClasses(Class<?> c) {
-	System.out.format("Classes:%n");
-	Class<?>[] clss = c.getClasses();
-	for (Class<?> cls : clss) {
-	    System.out.format("  %s%n", cls.getCanonicalName());
-	}
-	if (clss.length == 0) {
-	    System.out.format("  -- No member interfaces, classes, or enums --%n");
-	}
-	System.out.format("%n");
+	String salida = doc.GenerateXML();
+	PrintWriter out = new PrintWriter(args[1]);
+	out.println(salida);
+	out.close();
     }
 
 }

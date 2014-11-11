@@ -13,9 +13,31 @@ import java.lang.reflect.Method;
  * @author esteban
  */
 class WSDLOperation {
+    
+    private static String ServiceURL = "http://servicioweb";
+
+    public static String getServiceURL() {
+	return ServiceURL;
+    }
+
+    public static void setServiceURL(String ServiceURL) {
+	WSDLOperation.ServiceURL = ServiceURL;
+    }
+    
+    private String xml;
 
     WSDLOperation(Method m) {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	String id = m.getName();
+	StringBuilder sb = new StringBuilder();
+	sb.append("    <operation name=\"").append(id).append("\">\n");
+	sb.append("        <input wsam:Action=\"").append(getServiceURL()).append("/").append(id).append("Request\" message=\"tns:").append(id).append("Request\"/>\n");
+	sb.append("        <output wsam:Action=\"").append(getServiceURL()).append("/").append(id).append("Response\" message=\"tns:").append(id).append("Response\"/>\n");
+	sb.append("    </operation>\n");
+	xml = sb.toString();
+    }
+    
+    public String getXML(){
+	return xml;
     }
     
 }

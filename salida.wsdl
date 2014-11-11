@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions targetNamespace="http://miws.com" name="example.Calculadora" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:tns="http://miws.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+<types><xsd:schema>
+<xs:element name="getNumbersResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:string"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="setNumbersRequest">
+    <xs:element name="arg0" type="xs:string"/>
+</xs:element>
+<xs:element name="setNumbersResponse">
+  <xs:sequence/>
+</xs:element>
+<xs:element name="getStackResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:string"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="getStackSizeResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:integer"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="PushNumberRequest">
+    <xs:element name="arg0" type="xs:string"/>
+</xs:element>
+<xs:element name="PushNumberResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="OpSumResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="OpSubResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="OpMulResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="OpDivResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="OpRemResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="OpSqrtResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:element>
+<xs:element name="toStringResponse">
+<xs:sequence>
+    <xs:element name="return" type="xs:string"/>
+</xs:sequence>
+</xs:element>
+</xsd:schema></types>
+<message name="getNumbersRequest">
+  <part name="parameters" element="tns:getNumbersRequest"/>
+</message>
+<message name="getNumbersResponse">
+  <part name="parameters" element="tns:getNumbersResponse"/>
+</message>
+<message name="setNumbersRequest">
+  <part name="parameters" element="tns:setNumbersRequest"/>
+</message>
+<message name="setNumbersResponse">
+  <part name="parameters" element="tns:setNumbersResponse"/>
+</message>
+<message name="getStackRequest">
+  <part name="parameters" element="tns:getStackRequest"/>
+</message>
+<message name="getStackResponse">
+  <part name="parameters" element="tns:getStackResponse"/>
+</message>
+<message name="getStackSizeRequest">
+  <part name="parameters" element="tns:getStackSizeRequest"/>
+</message>
+<message name="getStackSizeResponse">
+  <part name="parameters" element="tns:getStackSizeResponse"/>
+</message>
+<message name="PushNumberRequest">
+  <part name="parameters" element="tns:PushNumberRequest"/>
+</message>
+<message name="PushNumberResponse">
+  <part name="parameters" element="tns:PushNumberResponse"/>
+</message>
+<message name="OpSumRequest">
+  <part name="parameters" element="tns:OpSumRequest"/>
+</message>
+<message name="OpSumResponse">
+  <part name="parameters" element="tns:OpSumResponse"/>
+</message>
+<message name="OpSubRequest">
+  <part name="parameters" element="tns:OpSubRequest"/>
+</message>
+<message name="OpSubResponse">
+  <part name="parameters" element="tns:OpSubResponse"/>
+</message>
+<message name="OpMulRequest">
+  <part name="parameters" element="tns:OpMulRequest"/>
+</message>
+<message name="OpMulResponse">
+  <part name="parameters" element="tns:OpMulResponse"/>
+</message>
+<message name="OpDivRequest">
+  <part name="parameters" element="tns:OpDivRequest"/>
+</message>
+<message name="OpDivResponse">
+  <part name="parameters" element="tns:OpDivResponse"/>
+</message>
+<message name="OpRemRequest">
+  <part name="parameters" element="tns:OpRemRequest"/>
+</message>
+<message name="OpRemResponse">
+  <part name="parameters" element="tns:OpRemResponse"/>
+</message>
+<message name="OpSqrtRequest">
+  <part name="parameters" element="tns:OpSqrtRequest"/>
+</message>
+<message name="OpSqrtResponse">
+  <part name="parameters" element="tns:OpSqrtResponse"/>
+</message>
+<message name="toStringRequest">
+  <part name="parameters" element="tns:toStringRequest"/>
+</message>
+<message name="toStringResponse">
+  <part name="parameters" element="tns:toStringResponse"/>
+</message>
+<portType name="example.Calculadora">
+    <operation name="getNumbers">
+        <input wsam:Action="http://servicioweb/getNumbersRequest" message="tns:getNumbersRequest"/>
+        <output wsam:Action="http://servicioweb/getNumbersResponse" message="tns:getNumbersResponse"/>
+    </operation>
+    <operation name="setNumbers">
+        <input wsam:Action="http://servicioweb/setNumbersRequest" message="tns:setNumbersRequest"/>
+        <output wsam:Action="http://servicioweb/setNumbersResponse" message="tns:setNumbersResponse"/>
+    </operation>
+    <operation name="getStack">
+        <input wsam:Action="http://servicioweb/getStackRequest" message="tns:getStackRequest"/>
+        <output wsam:Action="http://servicioweb/getStackResponse" message="tns:getStackResponse"/>
+    </operation>
+    <operation name="getStackSize">
+        <input wsam:Action="http://servicioweb/getStackSizeRequest" message="tns:getStackSizeRequest"/>
+        <output wsam:Action="http://servicioweb/getStackSizeResponse" message="tns:getStackSizeResponse"/>
+    </operation>
+    <operation name="PushNumber">
+        <input wsam:Action="http://servicioweb/PushNumberRequest" message="tns:PushNumberRequest"/>
+        <output wsam:Action="http://servicioweb/PushNumberResponse" message="tns:PushNumberResponse"/>
+    </operation>
+    <operation name="OpSum">
+        <input wsam:Action="http://servicioweb/OpSumRequest" message="tns:OpSumRequest"/>
+        <output wsam:Action="http://servicioweb/OpSumResponse" message="tns:OpSumResponse"/>
+    </operation>
+    <operation name="OpSub">
+        <input wsam:Action="http://servicioweb/OpSubRequest" message="tns:OpSubRequest"/>
+        <output wsam:Action="http://servicioweb/OpSubResponse" message="tns:OpSubResponse"/>
+    </operation>
+    <operation name="OpMul">
+        <input wsam:Action="http://servicioweb/OpMulRequest" message="tns:OpMulRequest"/>
+        <output wsam:Action="http://servicioweb/OpMulResponse" message="tns:OpMulResponse"/>
+    </operation>
+    <operation name="OpDiv">
+        <input wsam:Action="http://servicioweb/OpDivRequest" message="tns:OpDivRequest"/>
+        <output wsam:Action="http://servicioweb/OpDivResponse" message="tns:OpDivResponse"/>
+    </operation>
+    <operation name="OpRem">
+        <input wsam:Action="http://servicioweb/OpRemRequest" message="tns:OpRemRequest"/>
+        <output wsam:Action="http://servicioweb/OpRemResponse" message="tns:OpRemResponse"/>
+    </operation>
+    <operation name="OpSqrt">
+        <input wsam:Action="http://servicioweb/OpSqrtRequest" message="tns:OpSqrtRequest"/>
+        <output wsam:Action="http://servicioweb/OpSqrtResponse" message="tns:OpSqrtResponse"/>
+    </operation>
+    <operation name="toString">
+        <input wsam:Action="http://servicioweb/toStringRequest" message="tns:toStringRequest"/>
+        <output wsam:Action="http://servicioweb/toStringResponse" message="tns:toStringResponse"/>
+    </operation>
+</portType>
+<binding name="example.CalculadoraPortBinding" type="tns:example.Calculadora">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>    <operation name="getNumbers">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="setNumbers">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getStack">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getStackSize">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="PushNumber">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="OpSum">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="OpSub">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="OpMul">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="OpDiv">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="OpRem">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="OpSqrt">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="toString">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+</binding>
+<service name="example.Calculadora">
+    <port name="example.CalculadoraPort" binding="tns:example.CalculadoraPortBinding">
+      <soap:address location="http://miws.com"/>
+    </port>
+  </service>
+</definitions>

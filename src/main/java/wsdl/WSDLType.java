@@ -5,8 +5,7 @@
  */
 package wsdl;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.*;
 
 /**
  *
@@ -16,22 +15,68 @@ class WSDLType {
 
     String typeName;
     String typeSeq;
+    String kind;
 
     WSDLType(Method m, String request, Class<?>[] parameterTypes) {
-	typeName = m.getName() + "Request";
+	kind = request;
+	typeName = m.getName() + request;
 	typeSeq = GenerateType(m.getParameters());
     }
 
-    WSDLType(Method m, Class<?> returnType) {
-	typeName = m.getName() + "Response";
-	typeSeq = GenerateType(m.getParameters());
+    WSDLType(Method m, String response, Class<?> returnType) {
+	kind = response;
+	typeName = m.getName() + response;
+	typeSeq = ReturnType(m.getReturnType());
     }
 
-    public String getType() {
+    public String getXML() {
 	StringBuilder sb = new StringBuilder();
-	sb.append("<xs:element name=\"").append(typeName).append("\">");
+	sb.append("<xs:element name=\"").append(typeName).append("\">\n");
 	sb.append(typeSeq);
-	sb.append("</xs:element>");
+	sb.append("</xs:element>\n");
+	return sb.toString();
+    }
+
+    private String ReturnType(Class<?> clase) {
+	StringBuilder sb = new StringBuilder();
+	sb.append("<xs:sequence>\n");
+	switch (clase.getSimpleName()) {
+	    case "void":
+		return "  <xs:sequence/>\n";
+	    case "Void":
+		return "<xs:sequence/>";
+	    case "int":
+		sb.append("    <xs:element name=\"")
+			.append("return")
+			.append("\" type=\"xs:integer\"/>\n");
+		break;
+	    case "Integer":
+		sb.append("    <xs:element name=\"")
+			.append("return")
+			.append("\" type=\"xs:integer\"/>\n");
+		break;
+	    case "Double":
+		sb.append("    <xs:element name=\"")
+			.append("return")
+			.append("\" type=\"xs:decimal\"/>\n");
+		break;
+	    case "boolean":
+		sb.append("    <xs:element name=\"")
+			.append("return")
+			.append("\" type=\"xs:boolean\"/>\n");
+		break;
+	    case "Boolean":
+		sb.append("    <xs:element name=\"")
+			.append("return")
+			.append("\" type=\"xs:boolean\"/>\n");
+		break;
+	    default:
+		sb.append("    <xs:element name=\"")
+			.append("return")
+			.append("\" type=\"xs:string\"/>\n");
+		break;
+	}
+	sb.append("</xs:sequence>\n");
 	return sb.toString();
     }
 
@@ -42,6 +87,9 @@ class WSDLType {
 	    beginType = "  <xs:sequence>\n";
 	    endType = "  </xs:sequence>\n";
 	}
+	if (parameterTypes.length == 0) {
+	    return "<xs:sequence/>";
+	}
 	StringBuilder sb = new StringBuilder();
 	sb.append(beginType);
 	for (Parameter p : parameterTypes) {
@@ -51,6 +99,12 @@ class WSDLType {
 			.append("\" type=\"xs:anyType\" nillable=\"true\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>\n");
 	    } else {
 		switch (p.getClass().getSimpleName()) {
+		    case "void":
+			sb.append("<xs:sequence/>");
+			break;
+		    case "Void":
+			sb.append("<xs:sequence/>");
+			break;
 		    case "int":
 			sb.append("    <xs:element name=\"")
 				.append(p.getName())
